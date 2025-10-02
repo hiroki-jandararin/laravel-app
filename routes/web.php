@@ -2,30 +2,30 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 Route::get('/', function () {
     // fakerオブジェクトを生成します
     $faker = fake();
     // 4から10のランダムな文を生成します
     $chatMessages = $faker->sentences($faker->numberBetween(4, 10));
+    $users = User::orderBy('created_at', 'desc')->take(10)->get();
     // 'welcome'ビューを表示し、生成したチャットメッセージをビューに渡します
-    return view('welcome', ['chatMessages'=>$chatMessages]);
+    return view('welcome', ['chatMessages' => $chatMessages, 'users' => $users]);
 });
 
 Route::get('/dashboard', function () {
     $faker = fake();
-    return view('dashboard',[
+    return view('dashboard', [
         'welcomeMessages' => $faker->paragraphs(5),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/about', function () {
-    // fakerオブジェクトを生成します
+Route::get('/about-us', function () {
     $faker = fake();
-    // 4から10のランダムな文を生成します
+    $userName = $faker->name();
     $chatMessages = $faker->sentences($faker->numberBetween(4, 10));
-    // 'welcome'ビューを表示し、生成したチャットメッセージをビューに渡します
-    return view('welcome', ['chatMessages'=>$chatMessages]);
+    return view('about-us', ['userName' => $userName, 'chatMessages' => $chatMessages]);
 });
 
 Route::middleware('auth')->group(function () {
@@ -34,4 +34,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

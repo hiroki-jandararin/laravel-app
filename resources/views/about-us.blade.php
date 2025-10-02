@@ -59,9 +59,6 @@
     </main>
     <footer class="bg-gray-900 text-white text-center p-4">
         <p>© {!! date('Y') !!} AISuperChat Service. All rights reserved.</p>
-        @foreach($users as $user)
-        <div class="mb-4 mt-4">{{ $user->username }}</div>
-        @endforeach
     </footer>
 </body>
 
