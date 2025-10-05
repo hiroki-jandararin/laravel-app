@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
     // fakerオブジェクトを生成します
@@ -26,6 +27,16 @@ Route::get('/about-us', function () {
     $userName = $faker->name();
     $chatMessages = $faker->sentences($faker->numberBetween(4, 10));
     return view('about-us', ['userName' => $userName, 'chatMessages' => $chatMessages]);
+});
+
+Route::get('/users/profile/{user}', function (User $user) {
+    return view('user-profile', [
+        'userInfo' => [
+            'username' => $user->username,
+            'profileImageLink' => Storage::url($user->profile_path),
+            'description' => $user->description,
+        ],
+    ]);
 });
 
 Route::middleware('auth')->group(function () {

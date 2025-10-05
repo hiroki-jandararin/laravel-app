@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     <div> Welcome, {{Auth::user()->username}} </div>
                     @foreach($welcomeMessages as $welcomeMessage)
-                        <div class="mb-4 mt-4">{{ $welcomeMessage }}</div>
+                    <div class="mb-4 mt-4">{{ $welcomeMessage }}</div>
                     @endforeach
                 </div>
             </div>
